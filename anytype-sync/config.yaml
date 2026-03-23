@@ -17,13 +17,10 @@ ports:
   33020/udp: 33020
 ports_description:
   33010/tcp: "DRPC sync protocol (TCP)"
-  33020/udp: "QUIC sync protocol (UDP)"
+  33020/udp: "QUIC protocol (UDP)"
 options:
   external_ip: ""
-  storage_path: "/data/anytype"
   memory_limit: "500M"
 schema:
   external_ip: str
-  storage_path: str
   memory_limit: str
-image: "ghcr.io/grishy/any-sync-bundle:{arch}-{version}"
