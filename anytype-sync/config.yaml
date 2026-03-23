@@ -1,0 +1,29 @@
+name: Anytype Sync
+version: "1.0.0"
+slug: anytype_sync
+description: Self-hosted Anytype sync server using any-sync-bundle
+url: https://github.com/lutzgo/hassio-anytype
+arch:
+  - aarch64
+  - amd64
+  - armv7
+init: false
+startup: system
+boot: auto
+map:
+  - data:rw
+ports:
+  33010/tcp: 33010
+  33020/udp: 33020
+ports_description:
+  33010/tcp: "DRPC sync protocol (TCP)"
+  33020/udp: "QUIC sync protocol (UDP)"
+options:
+  external_ip: ""
+  storage_path: "/data/anytype"
+  memory_limit: "500M"
+schema:
+  external_ip: str
+  storage_path: str
+  memory_limit: str
+image: "ghcr.io/grishy/any-sync-bundle:{arch}-{version}"
