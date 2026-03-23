@@ -1,18 +1,13 @@
 ARG BUILD_FROM
-FROM $BUILD_FROM
+FROM $BUILD_FROM AS base
 
-ARG BUILD_ARCH
-ARG APP_VERSION="latest"
+# Install bashio dependencies
+RUN apk add --no-cache bash curl jq
 
-RUN apk add --no-cache bash curl
+# Copy the any-sync-bundle binary from the upstream image
+COPY --from=ghcr.io/grishy/any-sync-bundle:latest /usr/local/bin/any-sync-bundle /usr/local/bin/any-sync-bundle
 
-# Pull the any-sync-bundle binary for the right arch
-RUN ARCH=$(uname -m) && \
-    if [ "$ARCH" = "x86_64" ]; then GOARCH="amd64"; \
-    elif [ "$ARCH" = "aarch64" ]; then GOARCH="arm64"; \
-    elif [ "$ARCH" = "armv7l" ]; then GOARCH="arm"; \
-    else GOARCH="amd64"; fi && \
-    echo "Architecture: $GOARCH"
+RUN chmod +x /usr/local/bin/any-sync-bundle
 
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
